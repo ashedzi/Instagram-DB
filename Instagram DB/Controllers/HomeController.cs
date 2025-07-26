@@ -12,7 +12,7 @@ namespace Instagram_DB.Controllers
         {
             _logger = logger;
         }
-
+        //This is a test
         public IActionResult Index()
         {
             return View();
