@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <RootNamespace>Instagram_DB.BLL</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Instagram DB.DAL\Instagram DB.DAL.csproj" />
+    <ProjectReference Include="..\Instagram DB.Models\Instagram DB.Models.csproj" />
+  </ItemGroup>
+
+</Project>
