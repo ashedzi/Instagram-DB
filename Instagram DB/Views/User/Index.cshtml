@@ -1,0 +1,10 @@
+﻿@model IEnumerable<User>
+
+<h2>Users</h2>
+
+@foreach(var user in Model)
+{
+    <div>
+        <p>@user.Username</p>
+    </div>
+}
