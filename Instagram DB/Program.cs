@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using Instagram_DB.Models;
+
 namespace Instagram_DB
 {
     public class Program
@@ -5,6 +8,9 @@ namespace Instagram_DB
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            //Register the DB context
+            builder.Services.AddDbContext<InstagramDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
