@@ -8,7 +8,7 @@ namespace Instagram_DB.DAL {
             _context = context;
         }
 
-        public List<Comment> GetComments() {
+        public List<Comment> GetUsers() {
             return _context.Comments.ToList();
         }
     }
