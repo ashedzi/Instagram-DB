@@ -4,14 +4,14 @@ using Instagram_DB.Models;
 
 namespace Instagram_DB.BLL {
     public class DirectMessageService {
-        private readonly UserRepository _userRepository;
+        private readonly DirectMessageRepository _directMessageRepository;
 
-        public DirectMessageService(UserRepository userRepository) {
-            _userRepository = userRepository;
+        public DirectMessageService(DirectMessageRepository directMessageRepository) {
+            _directMessageRepository = directMessageRepository;
         }
 
         public List<User> getUsers() {
-            return _userRepository.GetUsers();
+            return _directMessageRepository.GetUsers();
         }
     }
 }
