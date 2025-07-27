@@ -8,7 +8,7 @@ namespace Instagram_DB.DAL {
             _context = context;
         }
 
-        public List<DirectMessage> GetUsers() {
+        public List<DirectMessage> GetDirectMessages() {
             return _context.DirectMessages.ToList();
         }
     }

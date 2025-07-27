@@ -8,7 +8,7 @@ namespace Instagram_DB.DAL {
             _context = context;
         }
 
-        public List<Story> GetUsers() {
+        public List<Story> GetStories() {
             return _context.Stories.ToList();
         }
     }
