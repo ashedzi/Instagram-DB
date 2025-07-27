@@ -1,8 +1,5 @@
-using Instagram_DB.BLL;
-using Instagram_DB.DAL;
-using Instagram_DB.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
+using Instagram_DB.Models;
 
 namespace Instagram_DB
 {
@@ -12,18 +9,8 @@ namespace Instagram_DB
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.Configuration
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json", optional: false)
-                .AddJsonFile("appsettings.Development.json", optional: true)
-                .AddEnvironmentVariables();
-
-
             //Register the DB context
             builder.Services.AddDbContext<InstagramDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
-            builder.Services.AddScoped<UserService>();
-            builder.Services.AddScoped<UserRepository>();
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
