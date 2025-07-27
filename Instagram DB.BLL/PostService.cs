@@ -4,14 +4,14 @@ using Instagram_DB.Models;
 
 namespace Instagram_DB.BLL {
     public class PostService {
-        private readonly UserRepository _userRepository;
+        private readonly PostRepository _postRepository;
 
-        public PostService(UserRepository userRepository) {
-            _userRepository = userRepository;
+        public PostService(PostRepository postRepository) {
+            _postRepository = postRepository;
         }
 
-        public List<User> getUsers() {
-            return _userRepository.GetUsers();
+        public List<Post> getUsers() {
+            return _postRepository.GetUsers();
         }
     }
 }

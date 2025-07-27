@@ -3,14 +3,14 @@ using Instagram_DB.Models;
 
 namespace Instagram_DB.BLL {
     public class StoryLikeService {
-        private readonly UserRepository _userRepository;
+        private readonly StoryLikeRepository _storyLikeRepository;
 
-        public StoryLikeService(UserRepository userRepository) {
-            _userRepository = userRepository;
+        public StoryLikeService(StoryLikeRepository storyLikeRepository) {
+            _storyLikeRepository = storyLikeRepository;
         }
 
-        public List<User> getUsers() {
-            return _userRepository.GetUsers();
+        public List<StoryLike> getUsers() {
+            return _storyLikeRepository.GetUsers();
         }
     }
 }

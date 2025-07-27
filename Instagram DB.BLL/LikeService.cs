@@ -4,14 +4,14 @@ using Instagram_DB.Models;
 
 namespace Instagram_DB.BLL {
     public class LikeService {
-        private readonly UserRepository _userRepository;
+        private readonly LikeRepository _likeRepository;
 
-        public LikeService(UserRepository userRepository) {
-            _userRepository = userRepository;
+        public LikeService(LikeRepository likeRepository) {
+            _likeRepository = likeRepository;
         }
 
-        public List<User> getUsers() {
-            return _userRepository.GetUsers();
+        public List<Like> getUsers() {
+            return _likeRepository.GetUsers();
         }
     }
 }

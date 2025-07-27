@@ -4,14 +4,14 @@ using Instagram_DB.Models;
 
 namespace Instagram_DB.BLL {
     public class CommentService {
-        private readonly UserRepository _userRepository;
+        private readonly CommentRepository _commentRepository;
 
-        public CommentService(UserRepository userRepository) {
-            _userRepository = userRepository;
+        public CommentService(CommentRepository commentRepository) {
+            _commentRepository = commentRepository;
         }
 
-        public List<User> getUsers() {
-            return _userRepository.GetUsers();
+        public List<Comment> getUsers() {
+            return _commentRepository.GetUsers();
         }
     }
 }
