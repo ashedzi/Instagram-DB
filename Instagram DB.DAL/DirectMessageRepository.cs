@@ -1,7 +1,7 @@
 ﻿using Instagram_DB.Models;
 
 namespace Instagram_DB.DAL {
-    internal class DirectMessageRepository {
+    public class DirectMessageRepository {
         private readonly InstagramDbContext _context;
 
         public DirectMessageRepository(InstagramDbContext context) {

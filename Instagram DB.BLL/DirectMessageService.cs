@@ -3,7 +3,7 @@ using Instagram_DB.Models;
 
 
 namespace Instagram_DB.BLL {
-    internal class DirectMessageService {
+    public class DirectMessageService {
         private readonly UserRepository _userRepository;
 
         public DirectMessageService(UserRepository userRepository) {

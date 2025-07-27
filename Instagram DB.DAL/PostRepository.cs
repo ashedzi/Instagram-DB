@@ -1,7 +1,7 @@
 ﻿using Instagram_DB.Models;
 
 namespace Instagram_DB.DAL {
-    internal class PostRepository {
+    public class PostRepository {
         private readonly InstagramDbContext _context;
 
         public PostRepository(InstagramDbContext context) {

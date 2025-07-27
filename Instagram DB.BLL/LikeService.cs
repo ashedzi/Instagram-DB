@@ -3,7 +3,7 @@ using Instagram_DB.Models;
 
 
 namespace Instagram_DB.BLL {
-    internal class LikeService {
+    public class LikeService {
         private readonly UserRepository _userRepository;
 
         public LikeService(UserRepository userRepository) {

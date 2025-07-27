@@ -3,7 +3,7 @@ using Instagram_DB.Models;
 
 
 namespace Instagram_DB.BLL {
-    internal class PostService {
+    public class PostService {
         private readonly UserRepository _userRepository;
 
         public PostService(UserRepository userRepository) {
