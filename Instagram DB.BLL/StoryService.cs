@@ -10,7 +10,7 @@ namespace Instagram_DB.BLL {
             _storyRepository = storyRepository;
         }
 
-        public List<User> getUsers() {
+        public List<Story> getUsers() {
             return _storyRepository.GetUsers();
         }
     }

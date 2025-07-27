@@ -9,7 +9,7 @@ namespace Instagram_DB.BLL {
             _storyLikeRepository = storyLikeRepository;
         }
 
-        public List<User> getUsers() {
+        public List<StoryLike> getUsers() {
             return _storyLikeRepository.GetUsers();
         }
     }

@@ -10,7 +10,7 @@ namespace Instagram_DB.BLL {
             _directMessageRepository = directMessageRepository;
         }
 
-        public List<User> getUsers() {
+        public List<DirectMessage> getUsers() {
             return _directMessageRepository.GetUsers();
         }
     }

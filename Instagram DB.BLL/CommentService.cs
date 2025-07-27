@@ -10,7 +10,7 @@ namespace Instagram_DB.BLL {
             _commentRepository = commentRepository;
         }
 
-        public List<User> getUsers() {
+        public List<Comment> getUsers() {
             return _commentRepository.GetUsers();
         }
     }
