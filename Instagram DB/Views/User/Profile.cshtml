@@ -1,11 +1,26 @@
-﻿@model User
+﻿@model Instagram_DB.Models.User
 
 <h2>@Model.Username</h2>
 
 @foreach(var user in Model)
 {
     <div>
-        <p>@user.Username</p>
+        <div>
+             <p>@user.ProfilePic</p>
+        </div>
+        <div>
+            <p>@user.Username</p>
+            <p>@user.FirstName</p>
+            <p>@user.LastName</p>
+            <p>@user.Email</p>
+            <p>@user.Bio</p>
+            <p>@user.Status</p>
+             <p>@user.Status</p>
+        </div>
+        <div>
+            <a asp-controller="User" asp-action="Following">Following</a>
+            <a asp-controller="User" asp-action="Followers">Followers</a>
+        </div>
     </div>
 }
 

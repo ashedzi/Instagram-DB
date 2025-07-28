@@ -10,7 +10,7 @@ namespace Instagram_DB.Controllers {
             _userService = userService;
         }
         public IActionResult Index () {
-            List<User> users = _userService.getUsers();
+            List<User> users = _userService.GetUsers();
             return View(users);
         }
     }
