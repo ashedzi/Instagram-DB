@@ -1,0 +1,24 @@
+﻿@model Instagram_DB.Models.User
+
+<h2>@Model.Username</h2>
+
+<div>
+    <div>
+            <p>@Model.ProfilePic</p>
+    </div>
+    <div>
+        <p>@Model.Username</p>
+        <p>@Model.FirstName</p>
+        <p>@Model.LastName</p>
+        <p>@Model.Email</p>
+        <p>@Model.Bio</p>
+        <p>@Model.Status</p>
+        <p>@Model.Status</p>
+    </div>
+    <div>
+        <a asp-controller="User" asp-action="Following">Following</a>
+        <a asp-controller="User" asp-action="Followers">Followers</a>
+    </div>
+</div>
+
+<a asp-controller="Hacker" asp-action="Index">Back to List</a>
