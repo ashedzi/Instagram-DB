@@ -19,5 +19,32 @@ namespace Instagram_DB.Controllers {
             List<Post> posts = _postService.GetPosts();
             return View(posts);
         }
+
+        public IActionResult Details(string id) {
+            if (String.IsNullOrEmpty(id)) {
+                return BadRequest();
+            }
+
+            Post post = _postService.GetPosts()
+                .FirstOrDefault(p => p.PostId == id);
+
+            if (post == null) {
+                return NotFound();
+            }
+
+            List<Comment> comments = _context.Comments
+                .Where(c => c.PostId == id)
+                .OrderByDescending(c => c.Timestamp)
+                .ToList();
+
+            List<Like> likes = _context.Likes
+                .Where(l => l.PostId == id)
+                .ToList();
+
+            ViewBag.Comments = comments;
+            ViewBag.Likes = likes;
+
+            return View(post);
+        }
     }
 }
