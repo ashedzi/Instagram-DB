@@ -1,0 +1,33 @@
+﻿@model IEnumerable<Instagram_DB.Models.DirectMessage>
+
+<div class="message-list">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Sender</th>
+                <th>Receiver</th>
+                <th>Message</th>
+                <th>Timestamp</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var message in Model)
+            {
+                <tr>
+                    <td>@message.SenderUser.Username</td>
+                    <td>@message.ReceiverUser.Username</td>
+                    <td>@message.TextContent</td>
+                    <td>@message.Timestamp.ToString("g")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@section Styles {
+    <style>
+        .message-list {
+            margin-top: 1rem;
+        }
+    </style>
+}
