@@ -1,10 +1,10 @@
-﻿@model IEnumerable<User>
+﻿@model IEnumerable<Instagram_DB.Models.User>
 
-<h2>Users</h2>
+<h2>User List</h2>
 
 @foreach(var user in Model)
 {
     <div>
-        <p>@user.Username</p>
+        <a asp-controller="User" asp-action="Profile" asp-route-UserName="@user.Username">@user.Username</a>
     </div>
 }
