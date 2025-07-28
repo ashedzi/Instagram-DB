@@ -8,6 +8,7 @@
                 <th>Receiver</th>
                 <th>Message</th>
                 <th>Timestamp</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -18,6 +19,9 @@
                     <td>@message.ReceiverUser.Username</td>
                     <td>@message.TextContent</td>
                     <td>@message.Timestamp.ToString("g")</td>
+                    <td>
+                        <a asp-action="Delete" asp-route-messageId="@message.MessageId" asp-route-userId="@ViewBag.UserId" class="btn btn-danger btn-sm">Delete</a>
+                    </td>
                 </tr>
             }
         </tbody>
@@ -28,6 +32,9 @@
     <style>
         .message-list {
             margin-top: 1rem;
+        }
+        .btn-sm {
+            padding: 0.25rem 0.5rem;
         }
     </style>
 }
