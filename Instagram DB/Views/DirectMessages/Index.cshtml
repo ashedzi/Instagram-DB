@@ -1,0 +1,11 @@
+﻿@model IEnumerable<Instagram_DB.Models.DirectMessage>
+@{
+    ViewData["Title"] = "Direct Messages";
+    int userId = ViewBag.UserId;
+}
+
+<h2>Direct Messages</h2>
+
+@await Html.PartialAsync("_MessageList", Model)
+
+<a asp-action="SendMessage" asp-route-userId="@userId" class="btn btn-primary">Send New Message</a>
