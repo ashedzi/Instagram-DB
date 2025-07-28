@@ -1,0 +1,12 @@
+﻿@model User
+
+<h2>@Model.Username</h2>
+
+@foreach(var user in Model)
+{
+    <div>
+        <p>@user.Username</p>
+    </div>
+}
+
+<a asp-controller="Hacker" asp-action="Index">Back to List</a>
