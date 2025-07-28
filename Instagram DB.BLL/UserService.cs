@@ -12,5 +12,16 @@ namespace Instagram_DB.BLL {
         public List<User> GetUsers () {
             return _userRepository.GetUsers();
         }
+
+        public void Add(User user) {
+            _userRepository.Add(user);
+        }
+
+        public void Update(User user) {
+            _userRepository.Update(user);
+        }
+        public void Delete(int id) {
+            _userRepository.Delete(id);
+        }
     }
 }
