@@ -17,6 +17,8 @@ public partial class Comment
 
     public int PosterUserId { get; set; }
 
+    public string Content { get; set; } = null!;
+
     public virtual User CommenterUser { get; set; } = null!;
 
     public virtual Post Post { get; set; } = null!;
