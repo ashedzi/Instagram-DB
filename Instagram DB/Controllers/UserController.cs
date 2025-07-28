@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 namespace Instagram_DB.Controllers {
     public class UserController : Controller {
         private readonly UserService _userService;
-        private readonly UserService _profile;
 
         public UserController(UserService userService) {
             _userService = userService;
