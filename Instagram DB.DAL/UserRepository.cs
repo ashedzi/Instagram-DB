@@ -11,11 +11,5 @@ namespace Instagram_DB.DAL {
         public List<User> GetUsers() {
             return _context.Users.ToList();
         }
-
-        public User GetById(int id) {
-            return _context.Users.FirstOrDefault(u => u.CommentId == id);
-        }
-
-        public void Add(User)
     }
 }
