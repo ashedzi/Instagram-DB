@@ -2,26 +2,23 @@
 
 <h2>@Model.Username</h2>
 
-@foreach(var user in Model)
-{
+<div>
     <div>
-        <div>
-             <p>@user.ProfilePic</p>
-        </div>
-        <div>
-            <p>@user.Username</p>
-            <p>@user.FirstName</p>
-            <p>@user.LastName</p>
-            <p>@user.Email</p>
-            <p>@user.Bio</p>
-            <p>@user.Status</p>
-             <p>@user.Status</p>
-        </div>
-        <div>
-            <a asp-controller="User" asp-action="Following">Following</a>
-            <a asp-controller="User" asp-action="Followers">Followers</a>
-        </div>
+            <p>@Model.ProfilePic</p>
     </div>
-}
+    <div>
+        <p>@Model.Username</p>
+        <p>@Model.FirstName</p>
+        <p>@Model.LastName</p>
+        <p>@Model.Email</p>
+        <p>@Model.Bio</p>
+        <p>@Model.Status</p>
+        <p>@Model.Status</p>
+    </div>
+    <div>
+        <a asp-controller="User" asp-action="Following">Following</a>
+        <a asp-controller="User" asp-action="Followers">Followers</a>
+    </div>
+</div>
 
 <a asp-controller="Hacker" asp-action="Index">Back to List</a>
