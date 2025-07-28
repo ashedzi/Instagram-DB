@@ -46,5 +46,32 @@ namespace Instagram_DB.Controllers {
 
             return View(post);
         }
+
+        [HttpPost]
+        public IActionResult AddComment(string postId, string content, int userId) {
+            if (String.IsNullOrWhiteSpace(content) || String.IsNullOrWhiteSpace(postId)) {
+                return RedirectToAction("Details", new { id = postId });
+            }
+
+            Post post = _context.Posts.FirstOrDefault(p => p.PostId == postId);
+            if (post == null) {
+                return NotFound();
+            }
+
+            Comment newComment = new Comment {
+                PostId = postId,
+                CommenterUserId = userId,    
+                PosterUserId = post.UserId, 
+                Content = content,
+                Timestamp = DateTime.Now,
+                Likes = 0,
+            };
+
+            _context.Comments.Add(newComment);
+            _context.SaveChanges();
+
+            return RedirectToAction("Details", new { id = postId });
+        }
+
     }
 }
