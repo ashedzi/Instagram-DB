@@ -27,5 +27,39 @@ namespace Instagram_DB.Controllers {
             ViewBag.UserId = userId;
             return View(messages);
         }
+        public IActionResult SendMessage(int? userId) {
+            if (userId == null) {
+                return BadRequest("User ID is required.");
+            }
+
+            ViewBag.UserId = userId;
+            ViewBag.Users = _context.Users
+                .Select(u => new { u.UserId, u.Username })
+                .ToList();
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> SendMessage(int userId, int receiverUserId, string textContent) {
+            if (ModelState.IsValid) {
+                var message = new DirectMessage {
+                    SenderUserId = userId,
+                    ReceiverUserId = receiverUserId,
+                    TextContent = textContent,
+                    Timestamp = DateTime.Now
+                };
+
+                _context.DirectMessages.Add(message);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Index", new { userId });
+            }
+
+            ViewBag.UserId = userId;
+            ViewBag.Users = _context.Users
+                .Select(u => new { u.UserId, u.Username })
+                .ToList();
+            return View();
+        }
     }
 }
