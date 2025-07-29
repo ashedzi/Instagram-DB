@@ -19,8 +19,6 @@ public partial class InstagramDbContext : DbContext
 
     public virtual DbSet<DirectMessage> DirectMessages { get; set; }
 
-    public virtual DbSet<Follower> Followers { get; set; }
-
     public virtual DbSet<Like> Likes { get; set; }
 
     public virtual DbSet<Post> Posts { get; set; }
@@ -31,18 +29,19 @@ public partial class InstagramDbContext : DbContext
 
     public virtual DbSet<User> Users { get; set; }
 
-//    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-//        => optionsBuilder.UseSqlServer("server=DESKTOP-UEPM0DL\\SQLEXPRESS;Database=Instagram DB;Integrated Security=True;TrustServerCertificate=True;");
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseSqlServer("Server=LAPTOP-T5DM8S1E\\SQLEXPRESS;Database=Instagram DB;Integrated Security=True;Trust Server Certificate=True;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Comment>(entity =>
         {
-            entity.HasKey(e => e.CommentId).HasName("PK__Comments__C3B4DFAA64DE0290");
+            entity.HasKey(e => e.CommentId).HasName("PK__Comments__C3B4DFAADF4912E3");
 
             entity.Property(e => e.CommentId).HasColumnName("CommentID");
             entity.Property(e => e.CommenterUserId).HasColumnName("CommenterUserID");
+            entity.Property(e => e.Content).HasDefaultValue("");
             entity.Property(e => e.PostId)
                 .HasMaxLength(20)
                 .IsUnicode(false)
@@ -68,7 +67,7 @@ public partial class InstagramDbContext : DbContext
 
         modelBuilder.Entity<DirectMessage>(entity =>
         {
-            entity.HasKey(e => e.MessageId).HasName("PK__DirectMe__C87C037C017184A4");
+            entity.HasKey(e => e.MessageId).HasName("PK__DirectMe__C87C037C501A9CC4");
 
             entity.Property(e => e.MessageId).HasColumnName("MessageID");
             entity.Property(e => e.ReceiverUserId).HasColumnName("ReceiverUserID");
@@ -85,16 +84,6 @@ public partial class InstagramDbContext : DbContext
                 .HasForeignKey(d => d.SenderUserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_DirectMessages_Sender");
-        });
-
-        modelBuilder.Entity<Follower>(entity => {
-            entity.HasKey(e => e.FollowId).HasName("PK__Follower__C7B8BA4A3C6E011B");
-
-            entity.HasIndex(e => new { e.FollowerUserId, e.FollowingUserId }, "UQ_Follow").IsUnique();
-
-            entity.Property(e => e.FollowId).HasColumnName("Follow_Id");
-            entity.Property(e => e.FollowerUserId).HasColumnName("FollowerUserID");
-            entity.Property(e => e.FollowingUserId).HasColumnName("FollowingUserID");
         });
 
         modelBuilder.Entity<Like>(entity =>
@@ -126,7 +115,7 @@ public partial class InstagramDbContext : DbContext
 
         modelBuilder.Entity<Post>(entity =>
         {
-            entity.HasKey(e => e.PostId).HasName("PK__Posts__AA126038DF3D8F60");
+            entity.HasKey(e => e.PostId).HasName("PK__Posts__AA1260381E010EA9");
 
             entity.Property(e => e.PostId)
                 .HasMaxLength(20)
@@ -145,7 +134,7 @@ public partial class InstagramDbContext : DbContext
 
         modelBuilder.Entity<Story>(entity =>
         {
-            entity.HasKey(e => e.StoryId).HasName("PK__Stories__3E82C0283A327E60");
+            entity.HasKey(e => e.StoryId).HasName("PK__Stories__3E82C028F184979B");
 
             entity.Property(e => e.StoryId)
                 .HasMaxLength(20)
@@ -160,16 +149,16 @@ public partial class InstagramDbContext : DbContext
             entity.HasOne(d => d.PosterNavigation).WithMany(p => p.StoryPosterNavigations)
                 .HasForeignKey(d => d.Poster)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Stories__Poster__4BAC3F29");
+                .HasConstraintName("FK__Stories__Poster__797309D9");
 
             entity.HasOne(d => d.ViewerNavigation).WithMany(p => p.StoryViewerNavigations)
                 .HasForeignKey(d => d.Viewer)
-                .HasConstraintName("FK__Stories__Viewer__4CA06362");
+                .HasConstraintName("FK__Stories__Viewer__7A672E12");
         });
 
         modelBuilder.Entity<StoryLike>(entity =>
         {
-            entity.HasKey(e => new { e.StoryId, e.Liker }).HasName("PK__StoryLik__43C1B54C74C86C01");
+            entity.HasKey(e => new { e.StoryId, e.Liker }).HasName("PK__StoryLik__43C1B54C7CED3557");
 
             entity.Property(e => e.StoryId)
                 .HasMaxLength(20)
@@ -180,17 +169,17 @@ public partial class InstagramDbContext : DbContext
             entity.HasOne(d => d.LikerNavigation).WithMany(p => p.StoryLikes)
                 .HasForeignKey(d => d.Liker)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__StoryLike__Liker__5070F446");
+                .HasConstraintName("FK__StoryLike__Liker__7E37BEF6");
 
             entity.HasOne(d => d.Story).WithMany(p => p.StoryLikes)
                 .HasForeignKey(d => d.StoryId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__StoryLike__Story__4F7CD00D");
+                .HasConstraintName("FK__StoryLike__Story__7D439ABD");
         });
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.UserId).HasName("PK__Users__1788CCACB7CE7B66");
+            entity.HasKey(e => e.UserId).HasName("PK__Users__1788CCAC3CC5C600");
 
             entity.HasIndex(e => e.Email, "UQ_Users_Email").IsUnique();
 
