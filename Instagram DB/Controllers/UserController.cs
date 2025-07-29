@@ -1,6 +1,7 @@
 ﻿using Instagram_DB.BLL;
 using Instagram_DB.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Instagram_DB.Controllers {
     public class UserController : Controller {
@@ -29,18 +30,28 @@ namespace Instagram_DB.Controllers {
 
         [HttpGet]
         public IActionResult Followers(string UserName) {
-            User user = _userService.GetUsers().FirstOrDefault(u => u.Username.Equals(UserName, StringComparison.OrdinalIgnoreCase));
+            User user = _userService.GetUserWithFollowersAndFollowing(UserName);
 
             if (user == null) {
                 return NotFound();
             }
+
             List<User> followers = user.FollowerUsers.ToList();
+            ViewBag.Names = user.Username;
             return View(followers);
         }
 
         [HttpGet]
         public IActionResult Following (string UserName) {
-            return View();
+            User user = _userService.GetUserWithFollowersAndFollowing(UserName);
+
+            if (user == null) {
+                return NotFound();
+            }
+
+            List<User> following = user.FollowingUsers.ToList();
+            ViewBag.Names = user.Username;
+            return View(following);
         }
     }
 }
