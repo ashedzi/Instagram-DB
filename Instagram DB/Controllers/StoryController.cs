@@ -7,7 +7,6 @@ namespace Instagram_DB.Controllers {
         private static List<Story> stories = new List<Story>();
         private static List<StoryLike> storyLikes = new List<StoryLike>();
         private static List<User> users = new List<User>();
-    }
 
     private void EnsureTestData () {
             if (!users.Any()) {
@@ -46,6 +45,10 @@ namespace Instagram_DB.Controllers {
                 });
             }
         }
-
-    }
+        public IActionResult Index () {
+            EnsureTestData();
+            return View(stories);
+        }
+    } 
+}
         
