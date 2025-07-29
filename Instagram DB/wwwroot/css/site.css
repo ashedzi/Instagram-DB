@@ -20,3 +20,37 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.user-card {
+    margin-bottom: 8px;
+}
+
+.profile-pic {
+    border-radius: 50%;
+    border: 1px solid #eee;
+    height: 40px;
+    width: 40px;
+    text-align: center;
+    background-color: #f7f7f7;
+    color: #999;
+
+    p {
+          line-height: 40px
+      }
+}
+
+.flex {
+    display: flex;
+    flex-direction: row;
+    column-gap: 8px;
+    align-items: center;
+}
+
+.username-link {
+    text-decoration: none;
+    color: #000;
+
+    &:hover {
+                color: #258cfb;
+            }
+}
