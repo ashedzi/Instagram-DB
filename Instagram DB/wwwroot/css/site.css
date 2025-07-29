@@ -20,3 +20,26 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.profile-pic-large {
+    border-radius: 50%;
+    border: 1px solid #eee;
+    height: 80px;
+    width: 80px;
+    text-align: center;
+    background-color: #f7f7f7;
+    color: #999;
+
+    p {
+         line-height: 80px;
+      }
+}
+
+.flex-profile {
+    display: flex;
+    flex-direction: column;
+    column-gap: 8px;
+    align-items: center;
+    align-items: center;
+}
+
