@@ -59,8 +59,19 @@ namespace Instagram_DB.Controllers {
         }
 
         public IActionResult StoryLikes ( string id, int likerId ) {
+            var exists = _context.StoryLikes.Any(l => l.StoryId == id && l.Liker == likerId);
+            if (!exists) {
+                var newLike = new StoryLike {
+                    StoryId = id,
+                    Liker = likerId,
+                    Timestamp = DateTime.Now
+                };
+                _context.StoryLikes.Add(newLike);
+                _context.SaveChanges();
+            }
+            return RedirectToAction("Details", new { id });
 
-        
+
         }
     }
 }

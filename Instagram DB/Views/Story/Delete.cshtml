@@ -1,16 +1,17 @@
 ﻿@model Instagram_DB.Models.Story
 
-<h2>Delete Hacker</h2>
+<h2>Delete Story</h2>
 
-<h3>Are you sure you want to delete this hacker?</h3>
+<h3>Are you sure you want to delete this story?</h3>
 <div>
-    <strong>Alias:</strong> @Model.Alias <br />
-    <strong>Real Name:</strong> @Model.RealName <br />
-    <strong>Reputation:</strong> @Model.Reputation
+    <strong>Story ID:</strong> @Model.StoryId <br />
+    <strong>Caption:</strong> @Model.Caption <br />
+    <strong>Posted By:</strong> @Model.PosterNavigation?.Username <br />
+    <strong>Timestamp:</strong> @Model.Timestamp
 </div>
 
 <form asp-action="Delete" method="post">
-    <input type="hidden" asp-for="Alias" />
-    <button type="submit">Delete</button>
-    <a asp-action="Index">Cancel</a>
+    <input type="hidden" asp-for="StoryId" />
+    <button type="submit" class="btn btn-danger">Delete</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
 </form>
