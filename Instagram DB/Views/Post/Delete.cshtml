@@ -1,0 +1,19 @@
+﻿@model Instagram_DB.Models.Post
+
+<h2>Delete Post</h2>
+
+<h3>Are you sure you want to delete this post?</h3>
+<div>
+    <strong>Post ID:</strong> @Model.PostId <br />
+    <strong>User:</strong> @Model.User?.Username <br />
+    <strong>Image:</strong> @Model.Image <br />
+    <strong>Caption:</strong> @Model.Caption <br />
+    <strong>Timestamp:</strong> @Model.Timestamp
+</div>
+
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="PostId" />
+    <button type="submit">Delete</button>
+    <a asp-action="Index" asp-route-userId="@Model.UserId">Cancel</a>
+</form>
+
