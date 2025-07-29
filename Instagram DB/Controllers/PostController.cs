@@ -6,10 +6,10 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace Instagram_DB.Controllers {
-    public class PostsController : Controller {
+    public class PostController : Controller {
         private readonly InstagramDbContext _context;
 
-        public PostsController(InstagramDbContext context) {
+        public PostController(InstagramDbContext context) {
             _context = context;
         }
 
