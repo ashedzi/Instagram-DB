@@ -23,7 +23,10 @@ body {
 
 user-card {
     padding: 8px;
+    border: 1px solid #000;
+    border-radius: 5px;
 }
 figure {
-
+    border-radius: 50%;
+    border: 1px solid #000;
 }
