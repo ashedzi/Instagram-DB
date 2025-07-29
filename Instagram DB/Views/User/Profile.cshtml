@@ -17,7 +17,7 @@
     </div>
     <div>
         <a asp-controller="User" asp-action="Following" asp-route-UserName="@Model.Username">Following</a>
-        <a asp-controller="User" asp-action="Followers">Followers</a>
+        <a asp-controller="User" asp-action="Followers" asp-route-UserName="@Model.Username">Followers</a>
     </div>
 </div>
 
