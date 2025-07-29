@@ -19,6 +19,8 @@ public partial class InstagramDbContext : DbContext
 
     public virtual DbSet<DirectMessage> DirectMessages { get; set; }
 
+    public virtual DbSet<Follower> Followers { get; set; }
+
     public virtual DbSet<Like> Likes { get; set; }
 
     public virtual DbSet<Post> Posts { get; set; }
@@ -83,6 +85,16 @@ public partial class InstagramDbContext : DbContext
                 .HasForeignKey(d => d.SenderUserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_DirectMessages_Sender");
+        });
+
+        modelBuilder.Entity<Follower>(entity => {
+            entity.HasKey(e => e.FollowId).HasName("PK__Follower__C7B8BA4A3C6E011B");
+
+            entity.HasIndex(e => new { e.FollowerUserId, e.FollowingUserId }, "UQ_Follow").IsUnique();
+
+            entity.Property(e => e.FollowId).HasColumnName("Follow_Id");
+            entity.Property(e => e.FollowerUserId).HasColumnName("FollowerUserID");
+            entity.Property(e => e.FollowingUserId).HasColumnName("FollowingUserID");
         });
 
         modelBuilder.Entity<Like>(entity =>
