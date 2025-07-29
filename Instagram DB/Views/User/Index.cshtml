@@ -6,7 +6,7 @@
 {
     <div class="user-card flex">
         <div class="profile-pic">
-            <p>U</p>
+            <p>@(user?.Username?.Length > 0 ? char.ToUpperInvariant(user.Username[0]) : 'U')</p>
         </div>
 
         <div>
