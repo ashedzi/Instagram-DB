@@ -28,5 +28,23 @@ namespace Instagram_DB.Controllers {
             return View(await posts.ToListAsync());
         }
 
+        public async Task<IActionResult> Details(string id) {
+            if (string.IsNullOrEmpty(id)) {
+                return BadRequest("Post ID is required.");
+            }
+
+            var post = await _context.Posts
+                .Include(p => p.User)
+                .Include(p => p.Comments)
+                    .ThenInclude(c => c.CommenterUser)
+                .FirstOrDefaultAsync(p => p.PostId == id);
+
+            if (post == null) {
+                return NotFound("Post not found.");
+            }
+
+            return View(post);
+        }
+
     }
 }
