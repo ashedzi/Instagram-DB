@@ -1,76 +1,153 @@
-﻿using Instagram_DB.BLL;
-using Instagram_DB.DAL;
-using Instagram_DB.Models;
+﻿using Instagram_DB.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Instagram_DB.Controllers {
-    public class PostController : Controller {
-
-        private readonly PostService _postService;
+    public class PostsController : Controller {
         private readonly InstagramDbContext _context;
 
-        public PostController() {
-            _context = new InstagramDbContext();
-            PostRepository postRepository = new PostRepository(_context);
-            _postService = new PostService(postRepository);
+        public PostsController(InstagramDbContext context) {
+            _context = context;
         }
 
-        public IActionResult Index() {
-            List<Post> posts = _postService.GetPosts();
-            return View(posts);
-        }
+        public async Task<IActionResult> Index(int? userId) {
+            var posts = _context.Posts
+                .Include(p => p.User)
+                .Include(p => p.Comments)
+                .OrderByDescending(p => p.Timestamp)
+                .AsQueryable();
 
-        public IActionResult Details(string id) {
-            if (String.IsNullOrEmpty(id)) {
-                return BadRequest();
+            if (userId != null) {
+                posts = posts.Where(p => p.UserId == userId);
+                ViewBag.UserId = userId;
             }
 
-            Post post = _postService.GetPosts()
-                .FirstOrDefault(p => p.PostId == id);
+            return View(await posts.ToListAsync());
+        }
+
+        public async Task<IActionResult> Details(string id) {
+            if (string.IsNullOrEmpty(id)) {
+                return BadRequest("Post ID is required.");
+            }
+
+            var post = await _context.Posts
+                .Include(p => p.User)
+                .Include(p => p.Comments)
+                    .ThenInclude(c => c.CommenterUser)
+                .FirstOrDefaultAsync(p => p.PostId == id);
 
             if (post == null) {
-                return NotFound();
+                return NotFound("Post not found.");
             }
-
-            List<Comment> comments = _context.Comments
-                .Where(c => c.PostId == id)
-                .OrderByDescending(c => c.Timestamp)
-                .ToList();
-
-            List<Like> likes = _context.Likes
-                .Where(l => l.PostId == id)
-                .ToList();
-
-            ViewBag.Comments = comments;
-            ViewBag.Likes = likes;
 
             return View(post);
         }
 
+        public IActionResult Create(int? userId) {
+            if (userId == null) {
+                return BadRequest("User ID is required.");
+            }
+
+            ViewBag.UserId = userId;
+            return View();
+        }
+ 
         [HttpPost]
-        public IActionResult AddComment(string postId, string content, int userId) {
-            if (String.IsNullOrWhiteSpace(content) || String.IsNullOrWhiteSpace(postId)) {
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(string image, string? caption, int userId) {
+            if (string.IsNullOrWhiteSpace(image)) {
+                ModelState.AddModelError("", "Image URL is required.");
+            }
+
+            if (ModelState.IsValid) {
+                var newPost = new Post {
+                    PostId = Guid.NewGuid().ToString("N").Substring(0, 12).ToUpper(),
+                    Image = image,
+                    Caption = caption,
+                    Timestamp = DateTime.Now,
+                    Likes = 0,
+                    Saves = 0,
+                    UserId = userId
+                };
+
+                _context.Posts.Add(newPost);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Index", new { userId });
+            }
+
+            ViewBag.UserId = userId;
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddComment(string postId, string content, int userId) {
+            if (string.IsNullOrWhiteSpace(postId) || string.IsNullOrWhiteSpace(content)) {
                 return RedirectToAction("Details", new { id = postId });
             }
 
-            Post post = _context.Posts.FirstOrDefault(p => p.PostId == postId);
+            var post = await _context.Posts.FindAsync(postId);
             if (post == null) {
-                return NotFound();
+                return NotFound("Post not found.");
             }
 
-            Comment newComment = new Comment {
+            var newComment = new Comment {
                 PostId = postId,
-                CommenterUserId = userId,    
-                PosterUserId = post.UserId, 
+                CommenterUserId = userId,
+                PosterUserId = post.UserId,
                 Content = content,
-                Timestamp = DateTime.Now,
                 Likes = 0,
+                Timestamp = DateTime.Now
             };
 
             _context.Comments.Add(newComment);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return RedirectToAction("Details", new { id = postId });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddLike(string postId, int userId) {
+            var post = await _context.Posts.FindAsync(postId);
+            if (post == null) return NotFound("Post not found.");
+
+            post.Likes += 1;
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Details", new { id = postId });
+        }
+
+        public async Task<IActionResult> Delete(string id) {
+            if (string.IsNullOrEmpty(id)) {
+                return BadRequest("Post ID is required.");
+            }
+
+            var post = await _context.Posts
+                .Include(p => p.User)
+                .FirstOrDefaultAsync(p => p.PostId == id);
+
+            if (post == null) {
+                return NotFound("Post not found.");
+            }
+
+            return View(post);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(string id) {
+            var post = await _context.Posts.FindAsync(id);
+            if (post == null) {
+                return NotFound("Post not found.");
+            }
+
+            _context.Posts.Remove(post);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index", new { userId = post.UserId });
         }
 
     }
