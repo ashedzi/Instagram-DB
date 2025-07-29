@@ -5,13 +5,13 @@
     <div class="profile-pic-large">
         <h4>@(Model?.Username?.Length > 0 ? char.ToUpperInvariant(Model.Username[0]) : 'U')</h4>
     </div>
-    <h3>@@@Model.Username)</h3>
-    <div>
-        <p>First Name: @Model.FirstName</p>
-        <p>Last Name: @Model.LastName</p>
-        <p>Email: @Model.Email</p>
-        <p>@Model.Bio</p>
-        <p>@Model.Status</p>
+    <h3>@("@" + (Model?.Username ?? ""))</h3>
+     <h4>@Model?.Bio</h4>
+    <div class="flex-profile">
+        <p>First Name: @Model?.FirstName</p>
+        <p>Last Name: @Model?.LastName</p>
+        <p>Email: @Model?.Email</p>
+        <p>@Model?.Status</p>
     </div>
     <div>
         <a asp-controller="User" asp-action="Following" class="btn primary-button">Following</a>
