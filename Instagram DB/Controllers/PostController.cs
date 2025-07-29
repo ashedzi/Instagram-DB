@@ -109,7 +109,46 @@ namespace Instagram_DB.Controllers {
             return RedirectToAction("Details", new { id = postId });
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddLike(string postId, int userId) {
+            var post = await _context.Posts.FindAsync(postId);
+            if (post == null) return NotFound("Post not found.");
 
+            post.Likes += 1;
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Details", new { id = postId });
+        }
+
+        public async Task<IActionResult> Delete(string id) {
+            if (string.IsNullOrEmpty(id)) {
+                return BadRequest("Post ID is required.");
+            }
+
+            var post = await _context.Posts
+                .Include(p => p.User)
+                .FirstOrDefaultAsync(p => p.PostId == id);
+
+            if (post == null) {
+                return NotFound("Post not found.");
+            }
+
+            return View(post);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(string id) {
+            var post = await _context.Posts.FindAsync(id);
+            if (post == null) {
+                return NotFound("Post not found.");
+            }
+
+            _context.Posts.Remove(post);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index", new { userId = post.UserId });
+        }
 
     }
 }
