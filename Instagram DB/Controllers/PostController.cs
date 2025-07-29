@@ -46,5 +46,41 @@ namespace Instagram_DB.Controllers {
             return View(post);
         }
 
+        public IActionResult Create(int? userId) {
+            if (userId == null) {
+                return BadRequest("User ID is required.");
+            }
+
+            ViewBag.UserId = userId;
+            return View();
+        }
+ 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(string image, string? caption, int userId) {
+            if (string.IsNullOrWhiteSpace(image)) {
+                ModelState.AddModelError("", "Image URL is required.");
+            }
+
+            if (ModelState.IsValid) {
+                var newPost = new Post {
+                    PostId = Guid.NewGuid().ToString("N").Substring(0, 12).ToUpper(),
+                    Image = image,
+                    Caption = caption,
+                    Timestamp = DateTime.Now,
+                    Likes = 0,
+                    Saves = 0,
+                    UserId = userId
+                };
+
+                _context.Posts.Add(newPost);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Index", new { userId });
+            }
+
+            ViewBag.UserId = userId;
+            return View();
+        }
+
     }
 }
