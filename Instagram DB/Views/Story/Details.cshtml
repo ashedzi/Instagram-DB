@@ -10,6 +10,11 @@
     <p><strong>Caption:</strong> @Model.Caption</p>
     <p><strong>Posted by:</strong> @Model.PosterNavigation?.Username</p>
     <p><strong>Timestamp:</strong> @Model.Timestamp</p>
+    <form asp-action="LikeStory" method="post" class="mb-3">
+        <input type="hidden" name="id" value="@Model.StoryId" />
+        <input type="number" name="likerId" placeholder="Your UserID" required />
+        <button type="submit" class="btn btn-primary">Like Story</button>
+    </form>
 </div>
 
 <div class="row mt-4">
