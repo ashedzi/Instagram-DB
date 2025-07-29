@@ -1,9 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Instagram_DB.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Instagram_DB.Controllers {
     public class StoryController : Controller {
-        public IActionResult Index () {
-            return View();
+        private static List<Story> stories = new List<Story>();
+        public class Story {
+            public string StoryId { get; set; }
+            public string Caption { get; set; }
         }
     }
 }
