@@ -21,6 +21,11 @@ body {
   margin-bottom: 60px;
 }
 
+.profile-pic-large {
+    border-radius: 50%;
+    border: 1px solid #eee;
+    height: 80px;
+    width: 80px;
 .user-card {
     margin-bottom: 8px;
 }
@@ -35,6 +40,31 @@ body {
     color: #999;
 
     p {
+         line-height: 80px;
+      }
+}
+
+.flex-profile {
+    display: flex;
+    flex-direction: column;
+    column-gap: 8px;
+    align-items: center;
+    align-items: center;
+}
+
+.btn {
+    padding: 8px 24px;
+    border-radius: 5px;
+}
+
+.primary-button {
+    background-color: #258cfb;
+}
+
+.secondary-button {
+    background-color: #ff6a00;
+}
+
           line-height: 40px
       }
 }
@@ -54,3 +84,4 @@ body {
                 color: #258cfb;
             }
 }
+
