@@ -82,5 +82,34 @@ namespace Instagram_DB.Controllers {
             return View();
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddComment(string postId, string content, int userId) {
+            if (string.IsNullOrWhiteSpace(postId) || string.IsNullOrWhiteSpace(content)) {
+                return RedirectToAction("Details", new { id = postId });
+            }
+
+            var post = await _context.Posts.FindAsync(postId);
+            if (post == null) {
+                return NotFound("Post not found.");
+            }
+
+            var newComment = new Comment {
+                PostId = postId,
+                CommenterUserId = userId,
+                PosterUserId = post.UserId,
+                Content = content,
+                Likes = 0,
+                Timestamp = DateTime.Now
+            };
+
+            _context.Comments.Add(newComment);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Details", new { id = postId });
+        }
+
+
+
     }
 }
