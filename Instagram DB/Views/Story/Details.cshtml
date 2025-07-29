@@ -1,1 +1,17 @@
-﻿@model IEnumerable<Instagram_DB.Models.Story>
+﻿@model Instagram_DB.Models.Story
+@{
+    var storyLikes = ViewBag.StoryLikes as List<Instagram_DB.Models.StoryLike>;
+    var storyViewers = ViewBag.StoryViewers as List<Instagram_DB.Models.User>;
+}
+
+<h2>Story Details</h2>
+<div>
+    <img src="@Model.Image" width="200" />
+    <p><strong>Caption:</strong> @Model.Caption</p>
+    <p><strong>Posted by:</strong> @Model.PosterNavigation?.Username</p>
+    <p><strong>Timestamp:</strong> @Model.Timestamp</p>
+</div>
+
+<div class="row mt-4">
+
+</div>

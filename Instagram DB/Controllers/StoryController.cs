@@ -57,5 +57,10 @@ namespace Instagram_DB.Controllers {
 
             return View(story);
         }
+
+        public IActionResult StoryLikes ( string id, int likerId ) {
+
+        
+        }
     }
 }
