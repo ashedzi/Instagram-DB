@@ -33,16 +33,17 @@ public partial class InstagramDbContext : DbContext
 
 //    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-//        => optionsBuilder.UseSqlServer("server=DESKTOP-UEPM0DL\\SQLEXPRESS;Database=Instagram DB;Integrated Security=True;TrustServerCertificate=True;");
+//        => optionsBuilder.UseSqlServer("Server=DESKTOP-UEPM0DL\\SQLEXPRESS;Database=Instagram DB;Integrated Security=True;Trust Server Certificate=True;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Comment>(entity =>
         {
-            entity.HasKey(e => e.CommentId).HasName("PK__Comments__C3B4DFAA64DE0290");
+            entity.HasKey(e => e.CommentId).HasName("PK__Comments__C3B4DFAACE97E52F");
 
             entity.Property(e => e.CommentId).HasColumnName("CommentID");
             entity.Property(e => e.CommenterUserId).HasColumnName("CommenterUserID");
+            entity.Property(e => e.Content).HasDefaultValue("");
             entity.Property(e => e.PostId)
                 .HasMaxLength(20)
                 .IsUnicode(false)
@@ -68,7 +69,7 @@ public partial class InstagramDbContext : DbContext
 
         modelBuilder.Entity<DirectMessage>(entity =>
         {
-            entity.HasKey(e => e.MessageId).HasName("PK__DirectMe__C87C037C017184A4");
+            entity.HasKey(e => e.MessageId).HasName("PK__DirectMe__C87C037C19DC9243");
 
             entity.Property(e => e.MessageId).HasColumnName("MessageID");
             entity.Property(e => e.ReceiverUserId).HasColumnName("ReceiverUserID");
@@ -87,14 +88,25 @@ public partial class InstagramDbContext : DbContext
                 .HasConstraintName("FK_DirectMessages_Sender");
         });
 
-        modelBuilder.Entity<Follower>(entity => {
-            entity.HasKey(e => e.FollowId).HasName("PK__Follower__C7B8BA4A3C6E011B");
+        modelBuilder.Entity<Follower>(entity =>
+        {
+            entity.HasKey(e => e.FollowId).HasName("PK__Follower__C7B8BA4A0BA16725");
 
             entity.HasIndex(e => new { e.FollowerUserId, e.FollowingUserId }, "UQ_Follow").IsUnique();
 
             entity.Property(e => e.FollowId).HasColumnName("Follow_Id");
             entity.Property(e => e.FollowerUserId).HasColumnName("FollowerUserID");
             entity.Property(e => e.FollowingUserId).HasColumnName("FollowingUserID");
+
+            entity.HasOne(d => d.FollowerUser).WithMany(p => p.FollowerFollowerUsers)
+                .HasForeignKey(d => d.FollowerUserId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Followers_Follower");
+
+            entity.HasOne(d => d.FollowingUser).WithMany(p => p.FollowerFollowingUsers)
+                .HasForeignKey(d => d.FollowingUserId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Followers_Following");
         });
 
         modelBuilder.Entity<Like>(entity =>
@@ -126,7 +138,7 @@ public partial class InstagramDbContext : DbContext
 
         modelBuilder.Entity<Post>(entity =>
         {
-            entity.HasKey(e => e.PostId).HasName("PK__Posts__AA126038DF3D8F60");
+            entity.HasKey(e => e.PostId).HasName("PK__Posts__AA126038CED1F051");
 
             entity.Property(e => e.PostId)
                 .HasMaxLength(20)
@@ -145,7 +157,7 @@ public partial class InstagramDbContext : DbContext
 
         modelBuilder.Entity<Story>(entity =>
         {
-            entity.HasKey(e => e.StoryId).HasName("PK__Stories__3E82C0283A327E60");
+            entity.HasKey(e => e.StoryId).HasName("PK__Stories__3E82C02812888E37");
 
             entity.Property(e => e.StoryId)
                 .HasMaxLength(20)
@@ -160,16 +172,16 @@ public partial class InstagramDbContext : DbContext
             entity.HasOne(d => d.PosterNavigation).WithMany(p => p.StoryPosterNavigations)
                 .HasForeignKey(d => d.Poster)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Stories__Poster__4BAC3F29");
+                .HasConstraintName("FK__Stories__Poster__123EB7A3");
 
             entity.HasOne(d => d.ViewerNavigation).WithMany(p => p.StoryViewerNavigations)
                 .HasForeignKey(d => d.Viewer)
-                .HasConstraintName("FK__Stories__Viewer__4CA06362");
+                .HasConstraintName("FK__Stories__Viewer__1332DBDC");
         });
 
         modelBuilder.Entity<StoryLike>(entity =>
         {
-            entity.HasKey(e => new { e.StoryId, e.Liker }).HasName("PK__StoryLik__43C1B54C74C86C01");
+            entity.HasKey(e => new { e.StoryId, e.Liker }).HasName("PK__StoryLik__43C1B54C9737371C");
 
             entity.Property(e => e.StoryId)
                 .HasMaxLength(20)
@@ -180,17 +192,17 @@ public partial class InstagramDbContext : DbContext
             entity.HasOne(d => d.LikerNavigation).WithMany(p => p.StoryLikes)
                 .HasForeignKey(d => d.Liker)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__StoryLike__Liker__5070F446");
+                .HasConstraintName("FK__StoryLike__Liker__17036CC0");
 
             entity.HasOne(d => d.Story).WithMany(p => p.StoryLikes)
                 .HasForeignKey(d => d.StoryId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__StoryLike__Story__4F7CD00D");
+                .HasConstraintName("FK__StoryLike__Story__160F4887");
         });
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.UserId).HasName("PK__Users__1788CCACB7CE7B66");
+            entity.HasKey(e => e.UserId).HasName("PK__Users__1788CCAC1A5F00C7");
 
             entity.HasIndex(e => e.Email, "UQ_Users_Email").IsUnique();
 
@@ -212,44 +224,6 @@ public partial class InstagramDbContext : DbContext
             entity.Property(e => e.ProfilePic).HasMaxLength(100);
             entity.Property(e => e.Status).HasMaxLength(50);
             entity.Property(e => e.Username).HasMaxLength(30);
-
-            entity.HasMany(d => d.FollowerUsers).WithMany(p => p.FollowingUsers)
-                .UsingEntity<Dictionary<string, object>>(
-                    "Follower",
-                    r => r.HasOne<User>().WithMany()
-                        .HasForeignKey("FollowerUserId")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("FK_Followers_Follower"),
-                    l => l.HasOne<User>().WithMany()
-                        .HasForeignKey("FollowingUserId")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("FK_Followers_Following"),
-                    j =>
-                    {
-                        j.HasKey("FollowerUserId", "FollowingUserId");
-                        j.ToTable("Followers");
-                        j.IndexerProperty<int>("FollowerUserId").HasColumnName("FollowerUserID");
-                        j.IndexerProperty<int>("FollowingUserId").HasColumnName("FollowingUserID");
-                    });
-
-            entity.HasMany(d => d.FollowingUsers).WithMany(p => p.FollowerUsers)
-                .UsingEntity<Dictionary<string, object>>(
-                    "Follower",
-                    r => r.HasOne<User>().WithMany()
-                        .HasForeignKey("FollowingUserId")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("FK_Followers_Following"),
-                    l => l.HasOne<User>().WithMany()
-                        .HasForeignKey("FollowerUserId")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("FK_Followers_Follower"),
-                    j =>
-                    {
-                        j.HasKey("FollowerUserId", "FollowingUserId");
-                        j.ToTable("Followers");
-                        j.IndexerProperty<int>("FollowerUserId").HasColumnName("FollowerUserID");
-                        j.IndexerProperty<int>("FollowingUserId").HasColumnName("FollowingUserID");
-                    });
         });
 
         OnModelCreatingPartial(modelBuilder);
