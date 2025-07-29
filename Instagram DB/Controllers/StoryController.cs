@@ -8,60 +8,44 @@ namespace Instagram_DB.Controllers {
         private static List<StoryLike> storyLikes = new List<StoryLike>();
         private static List<User> users = new List<User>();
     }
-}
-        private static List<Suspect> suspects = new List<Suspect>();
 
-        public static List<Suspect> GetSuspects () {
-            return suspects;
-        }
-
-        public IActionResult Index () {
-            return View(suspects);
-        }
-
-        [HttpGet]
-        public IActionResult Create () {
-            return View();
-        }
-
-        [HttpPost]
-        public IActionResult Create ( Suspect suspect ) {
-            if (ModelState.IsValid) {
-                suspects.Add(suspect);
-                return RedirectToAction("Index");
+    private void EnsureTestData () {
+            if (!users.Any()) {
+                users.AddRange(new List<User>
+                {
+            new User { UserId = 1, Username = "cristiano", FirstName = "Cristiano", LastName = "Ronaldo", FullName = "Cristiano Ronaldo", Email = "cr7@email.com", Status="Active", Followers=10, Following=10 },
+            new User { UserId = 2, Username = "messi", FirstName = "Lionel", LastName = "Messi", FullName = "Lionel Messi", Email = "messi@email.com", Status="Active", Followers=15, Following=20 }
+        });
             }
-
-            return View(suspect);
-        }
-
-        [HttpGet]
-        public IActionResult Details ( string Name ) {
-            var s = suspects.FirstOrDefault(x => x.Name == Name);
-            if (s == null) {
-                return NotFound();
+            if (!stories.Any()) {
+                stories.Add(new Story {
+                    StoryId = "S1",
+                    Caption = "Getting ready for the big game!",
+                    Poster = 1,
+                    Timestamp = DateTime.Now.AddHours(-3),
+                    Image = "/images/cr_story.jpg",
+                    PosterNavigation = users[0],
+                    Viewer = 2,
+                    ViewerNavigation = users[1]
+                });
+                stories.Add(new Story {
+                    StoryId = "S2",
+                    Caption = "Training session",
+                    Poster = 2,
+                    Timestamp = DateTime.Now.AddHours(-2),
+                    Image = "/images/messi_story.jpg",
+                    PosterNavigation = users[1]
+                });
             }
-
-            return View(s);
-        }
-
-        [HttpGet]
-        public IActionResult Delete ( string name ) {
-            var s = suspects.FirstOrDefault(x => x.Name == name);
-            if (s == null) {
-                return NotFound();
+            if (!storyLikes.Any()) {
+                storyLikes.Add(new StoryLike {
+                    StoryId = "S1",
+                    Liker = 2,
+                    Timestamp = DateTime.Now.AddHours(-1),
+                    LikerNavigation = users[1]
+                });
             }
-
-            return View(s);
         }
 
-        [HttpPost, ActionName("Delete")]
-        public IActionResult DeleteConfirmed ( string name ) {
-            var s = suspects.FirstOrDefault(x => x.Name == name);
-            if (s != null) {
-                suspects.Remove(s);
-            }
-
-            return RedirectToAction("Index");
-        }
     }
-}
+        
