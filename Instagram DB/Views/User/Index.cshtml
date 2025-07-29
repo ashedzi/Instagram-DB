@@ -4,7 +4,13 @@
 
 @foreach(var user in Model)
 {
-    <div>
-        <a asp-controller="User" asp-action="Profile" asp-route-UserName="@user.Username">@user.Username</a>
+    <div class="user-card">
+        <figure>
+            <img class="profile-pic" src="@user.ProfilePic" alt="@user.Username profile picture"/>
+        </figure>
+
+        <div>
+            <a asp-controller="User" asp-action="Profile" asp-route-UserName="@user.Username">@user.Username</a>
+        </div>
     </div>
 }
