@@ -21,21 +21,18 @@ body {
   margin-bottom: 60px;
 }
 
-user-card {
-    padding: 8px;
-    border: 1px solid #000;
-    border-radius: 5px;
+.user-card {
     margin-bottom: 8px;
 }
 
 .profile-pic {
     border-radius: 50%;
-    border: 1px solid #808080;
+    border: 1px solid #eee;
     height: 40px;
     width: 40px;
     text-align: center;
-    background-color: #808080;
-    color: #0094ff;
+    background-color: #f7f7f7;
+    color: #999;
 
     p {
           line-height: 40px
@@ -47,7 +44,6 @@ user-card {
     flex-direction: row;
     column-gap: 8px;
     align-items: center;
-    /*justify-content: center;*/
 }
 
 .username-link {
