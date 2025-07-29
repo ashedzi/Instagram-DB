@@ -20,8 +20,4 @@
     <ProjectReference Include="..\Instagram DB.Models\Instagram DB.Models.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Views\Story\" />
-  </ItemGroup>
-
 </Project>
