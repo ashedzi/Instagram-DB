@@ -1,0 +1,16 @@
+﻿@model WebApplication1.Models.Hacker
+
+<h2>Delete Hacker</h2>
+
+<h3>Are you sure you want to delete this hacker?</h3>
+<div>
+    <strong>Alias:</strong> @Model.Alias <br />
+    <strong>Real Name:</strong> @Model.RealName <br />
+    <strong>Reputation:</strong> @Model.Reputation
+</div>
+
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="Alias" />
+    <button type="submit">Delete</button>
+    <a asp-action="Index">Cancel</a>
+</form>
