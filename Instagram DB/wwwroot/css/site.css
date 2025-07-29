@@ -43,3 +43,16 @@ body {
     align-items: center;
 }
 
+.btn {
+    padding: 8px 24px;
+    border-radius: 5px;
+}
+
+.primary-button {
+    background-color: #258cfb;
+}
+
+.secondary-button {
+    background-color: #ff6a00;
+}
+
