@@ -1,5 +1,55 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@model Post
+
+<h2>Post Details</h2>
+
+<p><strong>Posted by:</strong> @Model.User.Username</p>
+<p><strong>Image:</strong><br />
+    <img src="@Model.Image" alt="Post image" width="300" />
+</p>
+<p><strong>Caption:</strong> @Model.Caption</p>
+<p><strong>Likes:</strong> @Model.Likes</p>
+<p><strong>Posted on:</strong> @Model.Timestamp.ToString("f")</p>
+
+<hr />
+
+<h3>Comments (@Model.Comments.Count)</h3>
+
+@if (Model.Comments.Any())
+{
+    <ul>
+        @foreach (var comment in Model.Comments.OrderByDescending(c => c.Timestamp))
+        {
+            <li>
+                <strong>@comment.CommenterUser.Username:</strong> @comment.Content
+                <br />
+                <small>on @comment.Timestamp.ToString("g")</small>
+            </li>
+        }
+    </ul>
 }
+else
+{
+    <p>No comments yet.</p>
+}
+
+<hr />
+
+<h3>Add a Comment</h3>
+<form asp-controller="Posts" asp-action="AddComment" method="post">
+    <input type="hidden" name="postId" value="@Model.PostId" />
+    <input type="hidden" name="userId" value="@ViewBag.CurrentUserId" />
+    <textarea name="content" rows="3" cols="40" placeholder="Write your comment here..."></textarea><br />
+    <button type="submit">Post Comment</button>
+</form>
+
+<hr />
+
+<h3>Add a Like</h3>
+<form asp-controller="Posts" asp-action="AddLike" method="post">
+    <input type="hidden" name="postId" value="@Model.PostId" />
+    <button type="submit">❤️ Like</button>
+</form>
+
+<br />
+<a asp-controller="Posts" asp-action="Index" asp-route-userId="@Model.UserId">Back to Posts</a>
+
