@@ -25,6 +25,11 @@ namespace Instagram_DB.Controllers {
             if (userId != null) {
                 posts = posts.Where(p => p.UserId == userId);
                 ViewBag.UserId = userId;
+
+                var user = await _context.Users.FindAsync(userId);
+                ViewBag.Username = user?.Username ?? $"User {userId}";
+            } else { 
+                ViewBag.Username = null;
             }
 
             return View(await posts.ToListAsync());

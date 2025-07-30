@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<Post>
 
-<h2>@(ViewBag.UserId != null ? $"Posts by User {ViewBag.UserId}" : "All Posts")</h2>
+<h2>@(ViewBag.UserId != null ? $"Posts by User {ViewBag.Username}" : "All Posts")</h2>
 
 <ul>
     @foreach (Post post in Model)
@@ -21,5 +21,8 @@
 
 @if (ViewBag.UserId != null)
 {
-    <a asp-controller="Post" asp-action="Create" >Create New Post</a>
+    <a asp-controller="Post" asp-action="Create" asp-route-userId="@ViewBag.UserId">Create New Post</a>
+    <a asp-action="Index">Back to All Posts</a>
+} else {
+    <a asp-controller="Post" asp-action="Create" asp-route-userId="@ViewBag.UserId">Create New Post</a>
 }
