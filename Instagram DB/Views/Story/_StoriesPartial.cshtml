@@ -1,0 +1,42 @@
+﻿@model IEnumerable<Instagram_DB.Models.Story>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Image</th>
+            <th>Caption</th>
+            <th>Poster</th>
+            <th>Timestamp</th>
+            <th>Details</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int i = 1;
+            foreach (var story in Model)
+            {
+                <tr>
+                    <td>@i</td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(story.Image))
+                        {
+                            <img src="@story.Image" width="60" alt="story image" />
+                        }
+                    </td>
+                    <td>@story.Caption</td>
+                    <td>@story.PosterNavigation?.Username</td>
+                    <td>@story.Timestamp</td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@story.StoryId">Details</a>
+                    </td>
+                </tr>
+                i++;
+            }
+        }
+    </tbody>
+</table>
+@if (Model == null || !Model.Any())
+{
+    <p>No stories to display.</p>
+}
