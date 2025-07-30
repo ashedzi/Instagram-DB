@@ -18,13 +18,25 @@
             {
                 <tr>
                     <td>@i</td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(story.Image))
+                        {
+                            <img src="@story.Image" width="60" alt="story image" />
+                        }
+                    </td>
                     <td>@story.Caption</td>
                     <td>@story.PosterNavigation?.Username</td>
                     <td>@story.Timestamp</td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@story.StoryId">Details</a>
+                    </td>
                 </tr>
                 i++;
             }
         }
     </tbody>
 </table>
-
+@if (Model == null || !Model.Any())
+{
+    <p>No stories to display.</p>
+}
