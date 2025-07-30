@@ -14,6 +14,8 @@ namespace Instagram_DB.Controllers {
         }
 
         public async Task<IActionResult> Index(int? userId) {
+            ViewBag.UserId = 1;
+
             var posts = _context.Posts
                 .Include(p => p.User)
                 .Include(p => p.Comments)
@@ -180,7 +182,7 @@ namespace Instagram_DB.Controllers {
 
             _context.Posts.Remove(post);
             await _context.SaveChangesAsync();
-            return RedirectToAction("Index", new { userId = post.UserId });
+            return RedirectToAction("Index");
         }
 
     }
