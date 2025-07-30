@@ -12,6 +12,20 @@ namespace Instagram_DB.Controllers {
         public IActionResult Index () {
             List<User> users = _userService.GetUsers();
             return View(users);
+
+        }
+
+        [HttpGet]
+        [Route("User/Profile/{UserName}")]
+        public IActionResult Profile(string UserName) {
+            User user = _userService.GetUsers().FirstOrDefault(u => u.Username.Equals(UserName, StringComparison.OrdinalIgnoreCase));
+
+            if (user == null) {
+                return NotFound();
+            }
+
+            return View(user);
+
         }
     }
 }

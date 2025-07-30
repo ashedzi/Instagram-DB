@@ -1,0 +1,25 @@
+﻿@model IEnumerable<Post>
+
+<h2>@(ViewBag.UserId != null ? $"Posts by User {ViewBag.UserId}" : "All Posts")</h2>
+
+<ul>
+    @foreach (Post post in Model)
+    {
+        <li>
+            <strong>Posted by:</strong> @post.User.Username <br />
+            <img src="@post.Image" alt="Post image" width="200" /><br />
+            <strong>Caption:</strong> @post.Caption <br />
+            <strong>Likes:</strong> @post.Likes &nbsp;
+            <strong>Comments:</strong> @post.Comments.Count <br />
+
+            <a asp-controller="Posts" asp-action="Details" asp-route-id="@post.PostId">Details</a>
+            <a asp-controller="Posts" asp-action="Delete" asp-route-id="@post.PostId">Delete</a>
+        </li>
+        <hr />
+    }
+</ul>
+
+@if (ViewBag.UserId != null)
+{
+    <a asp-controller="Posts" asp-action="Create" asp-route-userId="@ViewBag.UserId">Create New Post</a>
+}

@@ -1,0 +1,41 @@
+﻿@{
+    ViewData["Title"] = "Send Direct Message";
+    int userId = ViewBag.UserId;
+    var users = ViewBag.Users;
+}
+
+<h2>Send Direct Message</h2>
+
+<form asp-action="SendMessage" method="post">
+    <input type="hidden" name="userId" value="@userId" />
+    <div class="form-group">
+        <label for="receiverUserId">Recipient</label>
+        <select name="receiverUserId" class="form-control">
+            @foreach (var user in users)
+            {
+                <option value="@user.UserId">@user.Username</option>
+            }
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="textContent">Message</label>
+        <textarea name="textContent" class="form-control" rows="4" required></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Send</button>
+    <a asp-action="Index" asp-route-userId="@userId" class="btn btn-secondary">Cancel</a>
+</form>
+
+@section Styles {
+    <style>
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        .form-control {
+            width: 100%;
+            padding: 0.5rem;
+        }
+        .btn {
+            margin-top: 1rem;
+        }
+    </style>
+}
