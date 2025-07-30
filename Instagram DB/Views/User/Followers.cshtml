@@ -3,8 +3,14 @@
 <h2>@ViewBag.Name's Followers</h2>
 @foreach(var user in Model)
 {
-    <div>
-        <a asp-controller="User" asp-action="Profile" asp-route-UserName="@user.Username">@user.Username</a>
+    <div class="user-card flex">
+        <div class="profile-pic">
+            <p>@(user?.Username?.Length > 0 ? char.ToUpperInvariant(user.Username[0]) : 'U')</p>
+        </div>
+
+        <div>
+            <a asp-controller="User" asp-action="Profile" asp-route-UserName="@user.Username" class="username-link">@user.Username</a>
+        </div>
     </div>
 }
 
