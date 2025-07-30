@@ -1,16 +1,17 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Instagram_DB.Models;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 
 namespace Instagram_DB.Controllers {
     public class StoryController : Controller {
         private readonly InstagramDbContext _context;
 
-        public StoryController ( InstagramDbContext context ) {
+        public StoryController(InstagramDbContext context) {
             _context = context;
         }
 
-        public IActionResult Index () {
+        public IActionResult Index() {
             var stories = _context.Stories
                 .Select(s => new Story {
                     StoryId = s.StoryId,
@@ -22,7 +23,8 @@ namespace Instagram_DB.Controllers {
                 .ToList();
             return View(stories);
         }
-        public IActionResult Details ( string id ) {
+
+        public IActionResult Details(string id) {
             var story = _context.Stories
                 .Where(s => s.StoryId == id)
                 .Select(s => new Story {
@@ -58,7 +60,8 @@ namespace Instagram_DB.Controllers {
             return View(story);
         }
 
-        public IActionResult StoryLikes ( string id, int likerId ) {
+        [HttpPost]
+        public IActionResult LikeStory(string id, int likerId) {
             var exists = _context.StoryLikes.Any(l => l.StoryId == id && l.Liker == likerId);
             if (!exists) {
                 var newLike = new StoryLike {
@@ -70,8 +73,7 @@ namespace Instagram_DB.Controllers {
                 _context.SaveChanges();
             }
             return RedirectToAction("Details", new { id });
-
-
         }
+
     }
 }
