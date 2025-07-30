@@ -1,24 +1,22 @@
 ﻿@model Instagram_DB.Models.User
 
-<h2>@Model.Username</h2>
 
-<div>
-    <div>
-            <p>@Model.ProfilePic</p>
+<div class="flex-profile">
+    <div class="profile-pic-large">
+        <h4>@(Model?.Username?.Length > 0 ? char.ToUpperInvariant(Model.Username[0]) : 'U')</h4>
+    </div>
+    <h3>@("@" + (Model?.Username ?? ""))</h3>
+     <h4>@Model?.Bio</h4>
+    <div class="flex-profile">
+        <p>First Name: @Model?.FirstName</p>
+        <p>Last Name: @Model?.LastName</p>
+        <p>Email: @Model?.Email</p>
+        <p>@Model?.Status</p>
     </div>
     <div>
-        <p>@Model.Username</p>
-        <p>@Model.FirstName</p>
-        <p>@Model.LastName</p>
-        <p>@Model.Email</p>
-        <p>@Model.Bio</p>
-        <p>@Model.Status</p>
-        <p>@Model.Status</p>
-    </div>
-    <div>
-        <a asp-controller="User" asp-action="Following">Following</a>
-        <a asp-controller="User" asp-action="Followers">Followers</a>
+        <a asp-controller="User" asp-action="Following" class="btn primary-button">Following</a>
+        <a asp-controller="User" asp-action="Followers" class="btn secondary-button">Followers</a>
     </div>
 </div>
 
-<a asp-controller="Hacker" asp-action="Index">Back to List</a>
+<a asp-controller="User" asp-action="Index">Back to List</a>
