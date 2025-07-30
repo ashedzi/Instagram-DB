@@ -1,0 +1,20 @@
+﻿@model IEnumerable<Instagram_DB.Models.User>
+
+<h5>Viewers</h5>
+<ul>
+    @{
+        int i = 1;
+        if (Model != null)
+        {
+            foreach (var user in Model)
+            {
+                <li>@i. @user.Username</li>
+                i++;
+            }
+        }
+    }
+</ul>
+@if (Model == null || !Model.Any())
+{
+    <p>No viewers for this story.</p>
+}
