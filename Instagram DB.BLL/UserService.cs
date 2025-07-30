@@ -12,5 +12,9 @@ namespace Instagram_DB.BLL {
         public List<User> GetUsers () {
             return _userRepository.GetUsers();
         }
+
+        public User? GetUserWithFollowersAndFollowing (string username) {
+            return _userRepository.GetUserWithFollowersAndFollowing(username);
+        }
     }
 }
