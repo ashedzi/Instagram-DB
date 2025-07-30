@@ -43,6 +43,14 @@ namespace Instagram_DB.Controllers {
                 return NotFound("Post not found.");
             }
 
+            int currentUserId = 1;
+            ViewBag.CurrentUserId = currentUserId;
+
+            bool userHasLiked = await _context.Likes
+                .AnyAsync(l => l.PostId == id && l.LikerUserId == currentUserId);
+
+            ViewBag.UserHasLiked = userHasLiked;
+
             return View(post);
         }
 
@@ -94,6 +102,11 @@ namespace Instagram_DB.Controllers {
                 return NotFound("Post not found.");
             }
 
+            var userExists = await _context.Users.AnyAsync(u => u.UserId == userId);
+            if (!userExists) {
+                return NotFound("Commenting user not found.");
+            }
+
             var newComment = new Comment {
                 PostId = postId,
                 CommenterUserId = userId,
@@ -112,12 +125,32 @@ namespace Instagram_DB.Controllers {
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddLike(string postId, int userId) {
+            if (string.IsNullOrWhiteSpace(postId))
+                return BadRequest("Invalid post ID.");
+
             var post = await _context.Posts.FindAsync(postId);
-            if (post == null) return NotFound("Post not found.");
+            if (post == null)
+                return NotFound("Post not found.");
 
-            post.Likes += 1;
+            var existingLike = await _context.Likes
+                .FirstOrDefaultAsync(l => l.PostId == postId && l.LikerUserId == userId);
+
+            if (existingLike != null) {
+                _context.Likes.Remove(existingLike);
+                if (post.Likes > 0)
+                    post.Likes--;
+            } else {
+                var newLike = new Like {
+                    PostId = postId,
+                    PosterUserId = post.UserId,
+                    LikerUserId = userId
+                };
+
+                _context.Likes.Add(newLike);
+                post.Likes++;
+            }
+
             await _context.SaveChangesAsync();
-
             return RedirectToAction("Details", new { id = postId });
         }
 

@@ -12,8 +12,8 @@
             <strong>Likes:</strong> @post.Likes &nbsp;
             <strong>Comments:</strong> @post.Comments.Count <br />
 
-            <a asp-controller="Posts" asp-action="Details" asp-route-id="@post.PostId">Details</a>
-            <a asp-controller="Posts" asp-action="Delete" asp-route-id="@post.PostId">Delete</a>
+            <a asp-controller="Post" asp-action="Details" asp-route-id="@post.PostId">Details</a>
+            <a asp-controller="Post" asp-action="Delete" asp-route-id="@post.PostId">Delete</a>
         </li>
         <hr />
     }
@@ -21,5 +21,5 @@
 
 @if (ViewBag.UserId != null)
 {
-    <a asp-controller="Posts" asp-action="Create" asp-route-userId="@ViewBag.UserId">Create New Post</a>
+    <a asp-controller="Post" asp-action="Create" >Create New Post</a>
 }
