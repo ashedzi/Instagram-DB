@@ -39,10 +39,6 @@ public partial class User
 
     public virtual ICollection<DirectMessage> DirectMessageSenderUsers { get; set; } = new List<DirectMessage>();
 
-    public virtual ICollection<Follower> FollowerFollowerUsers { get; set; } = new List<Follower>();
-
-    public virtual ICollection<Follower> FollowerFollowingUsers { get; set; } = new List<Follower>();
-
     public virtual ICollection<Like> LikeLikerUsers { get; set; } = new List<Like>();
 
     public virtual ICollection<Like> LikePosterUsers { get; set; } = new List<Like>();
@@ -54,4 +50,8 @@ public partial class User
     public virtual ICollection<Story> StoryPosterNavigations { get; set; } = new List<Story>();
 
     public virtual ICollection<Story> StoryViewerNavigations { get; set; } = new List<Story>();
+
+    public virtual ICollection<User> FollowerUsers { get; set; } = new List<User>();
+
+    public virtual ICollection<User> FollowingUsers { get; set; } = new List<User>();
 }

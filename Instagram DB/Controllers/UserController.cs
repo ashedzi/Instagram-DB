@@ -29,7 +29,7 @@ namespace Instagram_DB.Controllers {
         }
 
         [HttpGet]
-        public IActionResult Followers(string UserName) {
+        public IActionResult Followers (string UserName) {
             User user = _userService.GetUserWithFollowersAndFollowing(UserName);
 
             if (user == null) {
