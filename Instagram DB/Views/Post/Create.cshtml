@@ -1,28 +1,25 @@
-﻿@model Post
+﻿@{
+    ViewData["Title"] = "Create Post";
+}
 
 <h2>Create a New Post</h2>
 
-<form asp-action="Create">
-    <div>
-        <label asp-for="UserId"></label>
-        <select asp-for="UserId" asp-items="ViewBag.Users" class="form-control"></select>
-        <span asp-validation-for="UserId" class="text-danger"></span>
+<form asp-action="Create" method="post">
+    <input type="hidden" name="userId" value="@ViewBag.UserId" />
+
+    <div class="form-group">
+        <label for="Image">Image URL</label>
+        <input type="text" name="Image" class="form-control" />
     </div>
-    <div>
-        <label asp-for="Image"></label>
-        <input asp-for="Image" class="form-control" />
-        <span asp-validation-for="Image" class="text-danger"></span>
+
+    <div class="form-group">
+        <label for="Caption">Caption</label>
+        <input type="text" name="caption" class="form-control" />
     </div>
-    <div>
-        <label asp-for="Caption"></label>
-        <input asp-for="Caption" class="form-control" />
-        <span asp-validation-for="Caption" class="text-danger"></span>
-    </div>
+
     <button type="submit">Post</button>
 </form>
 
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+    @await Html.PartialAsync("_ValidationScriptsPartial")
 }
