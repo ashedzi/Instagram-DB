@@ -1,0 +1,54 @@
+﻿@model Instagram_DB.Models.Story
+@{
+    var storyLikes = ViewBag.StoryLikes as List<Instagram_DB.Models.StoryLike>;
+    var storyViewers = ViewBag.StoryViewers as List<Instagram_DB.Models.User>;
+}
+<h2>Story Details</h2>
+<img src="@Model.Image" width="200" alt="Story Image" /><br />
+<strong>Caption:</strong> @Model.Caption <br />
+<strong>Posted by:</strong> @Model.PosterNavigation?.Username <br />
+<strong>Timestamp:</strong> @Model.Timestamp <br />
+
+<form asp-action="LikeStory" method="post">
+    <input type="hidden" name="id" value="@Model.StoryId" />
+    <input type="number" name="likerId" placeholder="Your UserID" required />
+    <button type="submit">Like Story</button>
+</form>
+
+<a asp-action="Delete" asp-route-id="@Model.StoryId">Delete Story</a> |
+<a asp-action="Index">Back to List</a>
+<hr />
+
+<h4>Likes</h4>
+<ul>
+@{
+    if (storyLikes != null && storyLikes.Any())
+    {
+        foreach (var like in storyLikes)
+        {
+            <li>@like.LikerNavigation?.Username (@like.Timestamp)</li>
+        }
+    }
+    else
+    {
+        <li>No likes yet.</li>
+    }
+}
+</ul>
+
+<h4>Viewers</h4>
+<ul>
+@{
+    if (storyViewers != null && storyViewers.Any())
+    {
+        foreach (var user in storyViewers)
+        {
+            <li>@user.Username</li>
+        }
+    }
+    else
+    {
+        <li>No viewers yet.</li>
+    }
+}
+</ul>

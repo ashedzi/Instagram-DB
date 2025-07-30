@@ -21,14 +21,10 @@ body {
   margin-bottom: 60px;
 }
 
-.profile-pic-large {
-    border-radius: 50%;
-    border: 1px solid #eee;
-    height: 80px;
-    width: 80px;
 .user-card {
     margin-bottom: 8px;
 }
+
 
 .profile-pic {
     border-radius: 50%;
@@ -40,8 +36,22 @@ body {
     color: #999;
 
     p {
-         line-height: 80px;
+         line-height: 40px;
       }
+}
+
+.profile-pic-large {
+    border-radius: 50%;
+    border: 1px solid #eee;
+    height: 100px;
+    width: 100px;
+    text-align: center;
+    background-color: #f7f7f7;
+    color: #999;
+
+    h4 {
+    line-height: 100px;
+    }
 }
 
 .flex-profile {
@@ -55,18 +65,25 @@ body {
 .btn {
     padding: 8px 24px;
     border-radius: 5px;
+    font-weight: 500;
+    font-size: 1rem;
 }
 
 .primary-button {
-    background-color: #258cfb;
+    background-color: #258cfb; 
+    margin-right: 16px;
+
+    &:hover {
+        background-color: #1e75e0;
+    }
 }
 
 .secondary-button {
     background-color: #ff6a00;
-}
 
-          line-height: 40px
-      }
+    &:hover {
+        background-color: #e65f00;
+    }
 }
 
 .flex {

@@ -6,16 +6,16 @@
         <h4>@(Model?.Username?.Length > 0 ? char.ToUpperInvariant(Model.Username[0]) : 'U')</h4>
     </div>
     <h3>@("@" + (Model?.Username ?? ""))</h3>
-     <h4>@Model?.Bio</h4>
+     <h6>@Model?.Bio</h6>
     <div class="flex-profile">
         <p>First Name: @Model?.FirstName</p>
         <p>Last Name: @Model?.LastName</p>
         <p>Email: @Model?.Email</p>
-        <p>@Model?.Status</p>
+        <p>Status: @Model?.Status</p>
     </div>
     <div>
-        <a asp-controller="User" asp-action="Following" class="btn primary-button">Following</a>
-        <a asp-controller="User" asp-action="Followers" class="btn secondary-button">Followers</a>
+        <a asp-controller="User" asp-action="Following" asp-route-UserName="@Model.Username">Following</a>
+        <a asp-controller="User" asp-action="Followers" asp-route-UserName="@Model.Username">Followers</a>
     </div>
 </div>
 

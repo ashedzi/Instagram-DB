@@ -1,0 +1,19 @@
+﻿@model IEnumerable<Instagram_DB.Models.StoryLike>
+
+<h5>Liked by:</h5>
+@if (Model != null && Model.Any())
+{
+    <ul>
+    @foreach (var like in Model)
+    {
+        <li>
+            @like.LikerNavigation?.Username
+            <span class="text-muted">(@like.Timestamp)</span>
+        </li>
+    }
+    </ul>
+}
+else
+{
+    <span class="text-muted">No likes yet.</span>
+}
