@@ -14,8 +14,8 @@
         <p>Status: @Model?.Status</p>
     </div>
     <div>
-        <a asp-controller="User" asp-action="Following" asp-route-UserName="@Model.Username">Following</a>
-        <a asp-controller="User" asp-action="Followers" asp-route-UserName="@Model.Username">Followers</a>
+        <a asp-controller="User" asp-action="Following" asp-route-UserName="@Model.Username" class="btn primary-button">Following</a>
+        <a asp-controller="User" asp-action="Followers" asp-route-UserName="@Model.Username" class="btn secondary-button">Followers</a>
     </div>
 </div>
 
