@@ -1,5 +1,11 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@model IEnumerable<Instagram_DB.Models.User>
+
+<h2>Following @ViewBag.Name</h2>
+@foreach(var user in Model)
+{
+    <div>
+        <a asp-controller="User" asp-action="Profile" asp-route-UserName="@user.Username">@user.Username</a>
+    </div>
 }
+
+<a asp-controller="User" asp-action="Profile" asp-route-UserName="@ViewBag.Name">Back To Profile</a>

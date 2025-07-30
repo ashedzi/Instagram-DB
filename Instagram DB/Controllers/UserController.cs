@@ -37,7 +37,7 @@ namespace Instagram_DB.Controllers {
             }
 
             List<User> followers = user.FollowerUsers.ToList();
-            ViewBag.Names = user.Username;
+            ViewBag.Name = user.Username;
             return View(followers);
         }
 
@@ -50,7 +50,7 @@ namespace Instagram_DB.Controllers {
             }
 
             List<User> following = user.FollowingUsers.ToList();
-            ViewBag.Names = user.Username;
+            ViewBag.Name = user.Username;
             return View(following);
         }
     }
