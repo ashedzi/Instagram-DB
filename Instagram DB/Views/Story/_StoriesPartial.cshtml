@@ -1,2 +1,20 @@
 ﻿@model IEnumerable<Instagram_DB.Models.Story>
-<h5>Viewed by:</h5>
+
+<h4>Stories</h4>
+<table class="table">
+    <tr>
+        <th>Image</th>
+        <th>Caption</th>
+        <th>Poster</th>
+        <th>Timestamp</th>
+        <th>Actions</th>
+    </tr>
+@foreach (var story in Model)
+{
+    <tr>
+        <td>@story.Caption</td>
+        <td>@story.PosterNavigation?.Username</td>
+        <td>@story.Timestamp</td>
+    </tr>
+}
+</table>
